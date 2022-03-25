@@ -1,0 +1,140 @@
+basePath: /v1
+definitions:
+  v1.Post:
+    properties:
+      body:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: integer
+      tags:
+        items:
+          type: string
+        type: array
+      title:
+        type: string
+    type: object
+  v1.allResponse:
+    properties:
+      posts:
+        items:
+          $ref: '#/definitions/v1.Post'
+        type: array
+    type: object
+  v1.apiInfo:
+    properties:
+      name:
+        type: string
+      version:
+        type: string
+    type: object
+  v1.createRequest:
+    properties:
+      body:
+        example: Post body
+        type: string
+      created_at:
+        example: "2021-12-01 15:04:05"
+        type: string
+      tags:
+        example:
+        - FirstTag
+        - SecondTag
+        items:
+          type: string
+        type: array
+      title:
+        example: Post title
+        type: string
+    required:
+    - body
+    - created_at
+    - tags
+    - title
+    type: object
+  v1.createResponse:
+    properties:
+      id:
+        type: integer
+    type: object
+  v1.responseError:
+    properties:
+      error:
+        example: message
+        type: string
+    type: object
+host: localhost:8000
+info:
+  contact: {}
+  description: Rentateam blog test task
+  title: Rentateam blog
+  version: "1.0"
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: Show API info
+      operationId: index
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/v1.apiInfo'
+      summary: Show API info
+      tags:
+      - api info
+  /post:
+    get:
+      consumes:
+      - application/json
+      description: Show all posts
+      operationId: all
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/v1.allResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/v1.responseError'
+      summary: Show all posts
+      tags:
+      - posts
+    post:
+      consumes:
+      - application/json
+      description: Create post
+      operationId: create
+      parameters:
+      - description: Post fields
+        in: body
+        name: post
+        required: true
+        schema:
+          $ref: '#/definitions/v1.createRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/v1.createResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/v1.responseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/v1.responseError'
+      summary: Create post
+      tags:
+      - posts
+swagger: "2.0"

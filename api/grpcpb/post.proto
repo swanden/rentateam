@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+option go_package="api/grpcpb";
+
+import "google/protobuf/timestamp.proto";
+
+message Post {
+  string title = 1;
+  string body = 2;
+  repeated string tags = 3;
+  google.protobuf.Timestamp createdAt = 4;
+}
+
+message CreateRequest {
+  Post post = 1;
+}
+
+message CreateResponse {
+  int32 id = 1;
+}
+
+message AllRequest {
+
+}
+
+message AllPost {
+  int32 id = 1;
+  string title = 2;
+  string body = 3;
+  repeated string tags = 4;
+  google.protobuf.Timestamp createdAt = 5;
+}
+
+message AllResponse {
+  repeated AllPost posts = 1;
+}
+
+service Posts {
+  rpc Create(CreateRequest) returns (CreateResponse) {};
+  rpc All(AllRequest) returns (AllResponse) {};
+}
