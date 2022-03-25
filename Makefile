@@ -16,7 +16,7 @@ migrations-create:
 	docker-compose run --rm migrate create -ext sql -dir rentateam/migrations -seq posts_table
 
 migrations-up:
-	docker-compose run --rm migrate -database postgres://user:password@localhost:5432/app?sslmode=disable -path rentateam/migrations up
+	docker-compose run --rm migrate -database ${PG_DSN} -path rentateam/migrations up
 
 migrations-down:
 	docker-compose run --rm migrate -database ${PG_DSN} -path rentateam/migrations down
