@@ -1,17 +1,15 @@
 include .env
 
-init: compose-build compose-up
+init:
+	docker-compose up --build
 
-compose-build:
-	docker-compose build
-
-compose-up:
+up:
 	docker-compose up
 
-compose-up:
+down:
 	docker-compose down
 
-compose-postgres:
+up-pg:
 	docker-compose up postgres
 
 migrations-create:

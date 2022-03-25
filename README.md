@@ -21,6 +21,10 @@ Usage
 ~~~
 make init
 ~~~
+or
+~~~
+docker-compose up --build
+~~~
 
 Swagger docs
 ~~~
