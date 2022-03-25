@@ -8,6 +8,9 @@ compose-build:
 compose-up:
 	docker-compose up
 
+compose-up:
+	docker-compose down
+
 compose-postgres:
 	docker-compose up postgres
 
