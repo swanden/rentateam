@@ -20,10 +20,6 @@ migrations-up:
 migrations-down:
 	docker-compose run --rm migrate -database ${PG_DSN} -path rentateam/migrations down
 
-swagger-install:
-	go get -u github.com/swaggo/swag/cmd/swag
-	go install github.com/swaggo/swag/cmd/swag@latest
-
 swagger-init:
 	swag init -g ./internal/controller/http/v1/router.go
 
