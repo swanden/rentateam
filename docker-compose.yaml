@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+
+  app:
+    build: .
+    container_name: app
+    image: app
+    environment:
+      PG_DSN: ${PG_DSN}
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+
+  postgres:
+    container_name: postgres
+    image: postgres
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: 'user'
+      POSTGRES_PASSWORD: 'password'
+      POSTGRES_DB: 'app'
+    ports:
+      - "5432:5432"
+
+  migrate:
+    image: migrate/migrate
+    volumes:
+      - .:/rentateam
+    command: ["-path", "/rentateam/migrations", "-database",  "${PG_DSN}", "up"]
+    depends_on:
+      - postgres
+
+volumes:
+  pg-data:
